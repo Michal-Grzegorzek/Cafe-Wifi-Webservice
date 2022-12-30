@@ -1,0 +1,218 @@
+
+body {
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+body, html {
+    height: 100%;
+}
+
+h1 {
+    font-family: 'Lora', serif;
+    font-size: 40px !important;
+}
+
+h2 {
+    font-family: 'Overpass', sans-serif;
+    font-size: 18px !important;
+
+
+}
+
+
+/* Footer */
+
+.copyright {
+     text-align: center;
+     margin-top: 20px;
+     margin-bottom: 30px;
+     font-size: 14px;
+  }
+
+.nav-foot{
+    background-color: white; /*#E5D9B6*/
+}
+
+
+.primary-color{
+    color: #292b2c;
+}
+
+.foot-margin{
+    margin-top:30px;
+    margin-bottom:20px
+}
+/* ***** */
+
+
+/* Nav Bar */
+.font-brand{
+    font-family: 'Lora', serif;
+    font-size: 35px !important;
+}
+
+.font-nav-items{
+    font-family: 'Overpass', sans-serif;
+    font-size: 18px !important;
+}
+
+/* ***** */
+
+
+/* The hero image */
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("https://www.coffeedesk.pl/blog/wp-content/uploads/2016/10/IMG_7164-1920x1280.jpg");
+
+  /* Set a specific height */
+    height: 89%;
+
+  /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+/* ***** */
+
+/* Section all-cafes */
+
+.b-custom {
+    color: black;
+    background-color: #E5D9B6;
+    margin: 3% 3% 5% 0;
+}
+
+.underline {
+    padding-top: 30px;
+    margin: auto;
+    width: 50%;
+    border-bottom: 3px solid #000;
+    text-align: center;
+    position: center;
+}
+
+.underline span {
+    position: relative;
+    top: 15px;
+    padding: 0 10px;
+    background: #fff;
+    font-size:25px;
+}
+
+.card-custom{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+/* ***** */
+
+/* Login image */
+.log-reg-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url("https://printdream.pl/wp-content/uploads/TK_45_L.jpg");
+
+  /* Set a specific height */
+    height: 89%;
+
+  /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/* Place text in the middle of the image */
+.log-reg-text {
+    /*position: absolute;*/
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.log-reg-text h1, h2 {
+    text-align: center;
+}
+.drr {
+    /*pbox-shadow: 0 15px 25px rgba(129, 124, 124, 0.0);*/
+    background-color: rgba(0, 0, 0, 0.3);
+
+}
+/* ***** */
+
+
+.add-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url("https://caffedelmondo.pl/blog/wp-content/uploads/2021/09/1-16-scaled.jpg");
+
+  /* Set a specific height */
+    height: 100%;
+
+  /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+
+.dupa{
+text-align: center;
+}
+
+
+/* Style the modal */
+#myModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the modal */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Style the modal */
+#myModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 150px; /* Location of the modal */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Style the modal content */
+.modal-content {
+  background-color: #ADE792;
+  border-color: #ADE792;
+  margin: auto;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center;
+}
+
+
+

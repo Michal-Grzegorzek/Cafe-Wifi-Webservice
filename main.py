@@ -9,8 +9,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from forms import Cafe, RegisterForm, LoginForm, RateForm
 from flask_gravatar import Gravatar
+from sqlalchemy.dialects.mysql import FLOAT
 import os
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///blog.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///cafes.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -59,34 +60,38 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
 
-    posts = relationship("BlogPost", back_populates="author")
-    comments = relationship("Comment", back_populates="comment_author")
+    cafes = relationship("AllCafes", back_populates="author")
+    rev_cafe = relationship("Reviews", back_populates="author")
 
 
-
-class BlogPost(db.Model):
-    __tablename__ = "blog_posts"
-    id = db.Column(db.Integer, primary_key=True)
-
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    author = relationship("User", back_populates="posts")
-    title = db.Column(db.String(250), unique=True, nullable=False)
-    subtitle = db.Column(db.String(250), nullable=False)
-    date = db.Column(db.String(250), nullable=False)
-    body = db.Column(db.Text, nullable=False)
-    img_url = db.Column(db.String(250), nullable=False)
-    comments = relationship("Comment", back_populates="parent_post")
-
-
-class Comment(db.Model):
-    __tablename__ = "comments"
+class AllCafes(db.Model):
+    __tablename__ = "all_cafes"
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comment_author = relationship("User", back_populates="comments")
+    author = relationship("User", back_populates="cafes")
+    id_cafe = relationship("Reviews", back_populates="caffe_review")
+    name = db.Column(db.String(250), unique=True, nullable=True)
+    map_url = db.Column(db.String(500), nullable=True)
+    img_url = db.Column(db.String(500), nullable=True)
+    location = db.Column(db.String(250), nullable=True)
+    seats = db.Column(db.String(250), nullable=True)
+    has_toilet = db.Column(db.Boolean, nullable=True)
+    has_wifi = db.Column(db.Boolean, nullable=True)
+    has_sockets = db.Column(db.Boolean, nullable=True)
+    can_take_calls = db.Column(db.Boolean, nullable=True)
+    coffee_price = db.Column(db.String(250), nullable=True)
+    avg_review = db.Column(FLOAT(unsigned=True))
 
-    post_id =db.Column(db.Integer, db.ForeignKey('blog_posts.id'))
-    parent_post = relationship("BlogPost", back_populates="comments")
-    text = db.Column(db.Text, nullable=False)
+
+class Reviews(db.Model):
+    __tablename__ = "all_reviews"
+    id = db.Column(db.Integer, primary_key=True)
+    cafe_id = db.Column(db.Integer, db.ForeignKey('all_cafes.id'))
+    caffe_review = relationship("AllCafes", back_populates="id_cafe")
+
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author = relationship("User", back_populates="rev_cafe")
+    rate = db.Column(db.Integer)
 
 
 
@@ -94,9 +99,25 @@ class Comment(db.Model):
 
 
 @app.route('/')
-def get_all_posts():
-    posts = BlogPost.query.all()
-    return render_template("index.html", all_posts=posts, logged_in=current_user.is_authenticated)
+@app.route('/home')
+def home():
+    cafes = AllCafes.query.all()
+    reviews = Reviews.query.all()
+    condition = request.args.get('condition')
+
+    return render_template("index.html", condition=condition, all_cafes=cafes, all_reviews=reviews, title="Home Page")
+
+
+@login_required
+@app.route('/cafes-added-by-you')
+def cafes_added_by_you():
+    if not current_user.is_authenticated:
+        flash("You need to login or register to use this tab.")
+        return redirect(url_for("login"))
+
+    cafes = AllCafes.query.all()
+    reviews = Reviews.query.all()
+    return render_template("cafes-added-by-you.html", all_cafes=cafes, all_reviews=reviews, title="Added By You")
 
 
 @app.route('/register', methods=["POST", "GET"])
@@ -118,13 +139,15 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return redirect(url_for("get_all_posts"))
+        return redirect(url_for("home"))
 
-    return render_template("register.html", form=form, logged_in=current_user.is_authenticated)
+    return render_template("register.html", form=form, title="Register Page")
 
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if request.method == "POST":
         email = form.email.data
@@ -136,103 +159,99 @@ def login():
             return redirect(url_for('login'))
         if werkzeug.security.check_password_hash(user.password, password):
             login_user(user)
-            print("zalogowano")
-            return redirect(url_for("get_all_posts"))
+            return redirect(url_for("home"))
         else:
             flash("Password incorrect, try again.")
             return redirect(url_for('login'))
 
-    return render_template("login.html", form=form, logged_in=current_user.is_authenticated)
+    return render_template("login.html", form=form, title="Login Page")
 
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('get_all_posts'))
+    return redirect(url_for('home'))
 
 
-@app.route("/post/<int:post_id>", methods=["POST", "GET"])
-def show_post(post_id):
-    form = CommentForm()
-    requested_post = BlogPost.query.get(post_id)
+@app.route("/add-cafe", methods=["POST", "GET"])
+def add_new_cafe():
+    if not current_user.is_authenticated:
+        flash("You need to login or register to adding new cafe.")
+        return redirect(url_for("login"))
+    form = Cafe()
+    if form.validate_on_submit():
+        new_cafe = AllCafes(
+            name=form.name.data,
+            author_id=current_user.id,
+            map_url=form.map_url.data,
+            img_url=form.img_url.data,
+            location=form.location.data,
+            seats=form.seats.data,
+            has_toilet=form.has_toilet.data,
+            has_wifi=form.has_wifi.data,
+            has_sockets=form.has_sockets.data,
+            can_take_calls=form.can_take_calls.data,
+            coffee_price=form.coffee_price.data,
+        )
 
+        db.session.add(new_cafe)
+        db.session.commit()
+        conditionn = "true"
+        return redirect(url_for("home", condition=conditionn))
+    return render_template("add-cafe.html", form=form, title="Add Cafe")
+
+
+@app.route("/review/<int:cafe_id>", methods=["POST", "GET"])
+def review(cafe_id):
+    form = RateForm()
+    requested_cafe = AllCafes.query.get(cafe_id)
+    requested_review = Reviews.query.get(cafe_id)
+
+    rev_list_to_check = Reviews.query.filter_by(cafe_id=cafe_id).all()
 
     if form.validate_on_submit():
         if not current_user.is_authenticated:
-            flash("You need to login or register to comment.")
+            flash("You need to login or register to add review.")
             return redirect(url_for("login"))
-        new_comment = Comment(
+
+        for i in rev_list_to_check:
+            if i.author_id == current_user.id:
+                return redirect(url_for("logout"))
+
+        new_review = Reviews(
+            cafe_id=cafe_id,
             author_id=current_user.id,
-            post_id=post_id,
-            text=form.text_area.data
-        )
-        db.session.add(new_comment)
-        db.session.commit()
-        return redirect(url_for("get_all_posts"))
-    return render_template("post.html", post=requested_post, logged_in=current_user.is_authenticated, form=form, gravatar=gravatar)
-
-
-@app.route("/about")
-def about():
-    return render_template("about.html", logged_in=current_user.is_authenticated)
-
-
-@app.route("/contact")
-def contact():
-    return render_template("contact.html", logged_in=current_user.is_authenticated)
-
-
-@app.route("/new-post", methods=["POST", "GET"])
-@admin_only
-def add_new_post():
-    form = CreatePostForm()
-    print("1")
-    if form.validate_on_submit():
-        print("3")
-        new_post = BlogPost(
-            title=form.title.data,
-            subtitle=form.subtitle.data,
-            body=form.body.data,
-            img_url=form.img_url.data,
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y")
+            rate=form.rate.data
         )
 
-        db.session.add(new_post)
+        db.session.add(new_review)
+
+        list_reviews = Reviews.query.filter_by(cafe_id=cafe_id).all()
+        count_reviews = 0
+        sum_reviews = 0
+
+        for i in list_reviews:
+            sum_reviews += i.rate
+            count_reviews += 1
+        requested_cafe.avg_review = round((sum_reviews/count_reviews), 1)
         db.session.commit()
-        return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html", form=form)
+        conditionn = "true"
+        return redirect(url_for("home", condition=conditionn))
+    return render_template("review.html", title="Add Review",
+                           cafes=requested_cafe, form=form)
 
 
-@app.route("/edit-post/<int:post_id>", methods=["POST", "GET"])
-@admin_only
-def edit_post(post_id):
-    post = BlogPost.query.get(post_id)
-    edit_form = CreatePostForm(
-        title=post.title,
-        subtitle=post.subtitle,
-        img_url=post.img_url,
-        author=current_user,
-        body=post.body
-    )
-    if edit_form.validate_on_submit():
-        post.title = edit_form.title.data
-        post.subtitle = edit_form.subtitle.data
-        post.img_url = edit_form.img_url.data
-        post.body = edit_form.body.data
-        db.session.commit()
-        return redirect(url_for("show_post", post_id=post.id))
+@app.route("/delete-cafe/<int:cafe_id>", methods=["POST", "GET"])
+def delete_cafe(cafe_id):
+    if not current_user.is_authenticated:
+        flash("You need to login or register to delete a cafe.")
+        return redirect(url_for("login"))
 
-    return render_template("make-post.html", form=edit_form, logged_in=current_user.is_authenticated, is_edit=True)
-
-
-@app.route("/delete/<int:post_id>")
-def delete_post(post_id):
-    post_to_delete = BlogPost.query.get(post_id)
-    db.session.delete(post_to_delete)
+    cafe_to_delete = AllCafes.query.get(cafe_id)
+    db.session.delete(cafe_to_delete)
     db.session.commit()
-    return redirect(url_for('get_all_posts'))
 
+    return redirect(url_for("cafes_added_by_you"))
 
 if __name__ == "__main__":
     app.run(debug=True)

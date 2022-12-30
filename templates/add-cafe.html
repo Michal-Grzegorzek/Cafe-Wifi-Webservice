@@ -1,0 +1,150 @@
+{% extends "layouts.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+
+<div class="log-reg-image align-items-center" style="height: 100%;">
+
+  <div class="card log-reg-text drr" style="width: 100%;">
+    <div class="card-body">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h1 class="card-title">Add a new caffe.</h1>
+      </div>
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto content mt-4">
+
+
+            <div class="container ">
+              <form method="POST" action="">
+                {{form.hidden_tag()}}
+
+                <fieldset>
+                  <div class="form-group">
+                    {{form.name.label(class="form-control-label font-nav-items")}}
+                    {% if form.name.errors %}
+                    {{form.name(class="form-control is-invalid")}}
+                    {% for error in form.name.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                    {% else %}
+                    {{form.name(class="form-control ")}}
+                    {% endif %}
+                  </div>
+
+                  <div class="form-group">
+                    {{form.map_url.label(class="form-control-label font-nav-items")}}
+                    {% if form.map_url.errors %}
+                    {{form.map_url(class="form-control is-invalid")}}
+                    {% for error in form.map_url.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                    {% else %}
+                    {{form.map_url(class="form-control ")}}
+                    {% endif %}
+                  </div>
+
+                  <div class="form-group">
+                    {{form.img_url.label(class="form-control-label font-nav-items")}}
+                    {% if form.img_url.errors %}
+                    {{form.img_url(class="form-control is-invalid")}}
+                    {% for error in form.img_url.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                    {% else %}
+                    {{form.img_url(class="form-control ")}}
+                    {% endif %}
+                  </div>
+
+                  <div class="form-group">
+                    {{form.location.label(class="form-control-label font-nav-items")}}
+                    {% if form.location.errors %}
+                    {{form.location(class="form-control is-invalid")}}
+                    {% for error in form.location.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                    {% else %}
+                    {{form.location(class="form-control ")}}
+                    {% endif %}
+                  </div>
+
+                  <div class="form-group">
+                    {{form.coffee_price.label(class="form-control-label font-nav-items")}}
+                    {% if form.coffee_price.errors %}
+                    {{form.coffee_price(class="form-control is-invalid")}}
+                    {% for error in form.coffee_price.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                    {% else %}
+                    {{form.coffee_price(class="form-control ")}}
+                    {% endif %}
+                  </div>
+
+                  <div class="form-group">
+                    {{form.seats.label(class="form-control-label font-nav-items")}}
+                    {% if form.seats.errors %}
+                    {{form.seats(class="form-control is-invalid")}}
+                    {% for error in form.seats.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                    {% else %}
+                    {{form.seats(class="form-control")}}
+                    {% endif %}
+                  </div>
+
+
+                  <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          {{form.has_toilet.label(class="form-control-label font-nav-items")}}
+                          {{form.has_toilet(class_="")}}
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          {{form.has_wifi.label(class="form-control-label font-nav-items")}}
+                          {{form.has_wifi(class_="")}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="container text-center">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          {{form.can_take_calls.label(class="form-control-label font-nav-items")}}
+                          {{form.can_take_calls(class_="")}}
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          {{form.has_sockets.label(class="form-control-label font-nav-items")}}
+                          {{form.has_sockets(class_="")}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </fieldset>
+                <div class="field-group mt-4 text-center">
+                  {{form.submit(class="btn btn-online-info btn-dark")}}
+
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
