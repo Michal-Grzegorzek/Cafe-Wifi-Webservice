@@ -40,7 +40,7 @@
               <i class="fas fa-chair mr-3" aria-hidden="true"></i> {{cafes.seats}}
             </p>
           </div>
-          <div class="col-lg-6 d-flex align-items-center justify-content-center row">
+          <div class="col-lg-6 d-flex align-items-center row">
             <div class="rating">
               <label>Rating: {{cafes.avg_review}}</label>
               <i class="fas fa-star star"></i>
@@ -57,9 +57,9 @@
 
 
             {% if ftotal.total == 1 %}
-            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark disabled">Rating added!</a>
+            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark disabled" style="margin-left:12px;" >Rating added!</a>
             {% else %}
-            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark">Add Review</a>
+            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark" style="margin-left:12px;">Add Review</a>
             {% endif %}
 
 

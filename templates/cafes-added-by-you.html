@@ -73,7 +73,7 @@
 <section id="all-cafes" class="mb-3">
 
   <div class="underline">
-    <h1>List of caffes added by you.</h1>
+    <h1>List of cafes added by you.</h1>
     <span>
     <i class="fa fa-star gold" aria-hidden="true"></i>
   </span>
@@ -116,12 +116,12 @@
 
 
             {% if ftotal.total == 1 %}
-            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark disabled">Rating added!</a>
+            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark disabled" style="margin-left:20px;">Rating added!</a>
             {% else %}
-            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark">Add Review</a>
+            <a href="{{ url_for('review', cafe_id=cafes.id) }}" class="btn btn-dark" style="margin-left:20px;">Add Review</a>
             {% endif %}
 
-            <a href="{{ url_for('delete_cafe', cafe_id=cafes.id) }}" class="btn btn-danger mt-1" onclick="showModal()">Delete Caffe</a>
+            <a href="{{ url_for('delete_cafe', cafe_id=cafes.id) }}" class="btn btn-danger mt-1" onclick="showModal()" style="margin-left:20px;">Delete Caffe</a>
 
             <h6 class="card-subtitle text-muted mb-1" style="padding-top: 10px"> Added by {{cafes.author.name}} </h6>
           </div>
