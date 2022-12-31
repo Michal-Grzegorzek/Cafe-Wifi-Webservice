@@ -25,10 +25,10 @@ class Cafe(FlaskForm):
     # coffee_price = FloatField("Cafe Price in €", validators=[DataRequired(), NumberRange(min=0)])
     coffee_price = MyFloatField("Cafe Price in €", validators=[DataRequired(), NumberRange(min=0)])
     seats = IntegerField('How Many Seats?', validators=[DataRequired(), NumberRange(min=0)])
-    has_toilet = BooleanField("Toilets Available?")
-    has_wifi = BooleanField("WiFi Available?")
-    has_sockets = BooleanField("Sockets Available?")
-    can_take_calls = BooleanField("Call taking Available?")
+    has_toilet = BooleanField("Toilets?")
+    has_wifi = BooleanField("WiFi?")
+    has_sockets = BooleanField("Sockets?")
+    can_take_calls = BooleanField("Call taking?")
     submit = SubmitField("Add Cafe")
 
 
