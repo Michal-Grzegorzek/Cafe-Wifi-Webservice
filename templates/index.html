@@ -35,9 +35,15 @@
             <h6 class="card-subtitle text-muted mb-1"> {{cafes.location}} </h6>
             <a href="{{cafes.map_url}}" class="card-link"> Google Maps </a>
             <p class="card-text mt-2">
-              <i class="fas fa-coffee mr-3" aria-hidden="true"></i> £{{cafes.coffee_price}}
+              <i class="fas fa-coffee mr-3" aria-hidden="true"
+                 data-bs-toggle="tooltip" data-bs-placement="left"
+                 data-bs-custom-class="custom-tooltip"
+                 data-bs-title="Coffee price."></i> £{{cafes.coffee_price}}
               <br>
-              <i class="fas fa-chair mr-3" aria-hidden="true"></i> {{cafes.seats}}
+              <i class="fas fa-chair mr-3" aria-hidden="true"
+                 data-bs-toggle="tooltip" data-bs-placement="left"
+                 data-bs-custom-class="custom-tooltip"
+                 data-bs-title="Number of seats."></i> {{cafes.seats}}
             </p>
           </div>
           <div class="col-lg-6 d-flex align-items-center row">
@@ -69,19 +75,28 @@
         <p class="card-text items">
 
           {% if cafes.has_sockets == 1 %}
-          <i class="fas fa-plug" style="width: 1.25rem; text-align:center" aria-hidden="true"></i>
+          <i class="fas fa-plug" style="width: 1.25rem; text-align:center" aria-hidden="true" data-bs-toggle="tooltip"
+             data-bs-placement="left"
+             data-bs-custom-class="custom-tooltip"
+             data-bs-title="Sockets available."></i>
           {% endif %}
 
           {% if cafes.has_toilet == 1 %}
-          <i class="fas fa-toilet" aria-hidden="true"></i>
+          <i class="fas fa-toilet" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="left"
+             data-bs-custom-class="custom-tooltip"
+             data-bs-title="Toilets available."></i>
           {% endif %}
 
           {% if cafes.can_take_calls == 1 %}
-          <i class="fas fa-phone" aria-hidden="true"></i>
+          <i class="fas fa-phone" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="left"
+             data-bs-custom-class="custom-tooltip"
+             data-bs-title="Call taking available."></i>
           {% endif %}
 
           {% if cafes.has_wifi == 1 %}
-          <i class="fas fa-wifi" aria-hidden="true"></i>
+          <i class="fas fa-wifi" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="left"
+             data-bs-custom-class="custom-tooltip"
+             data-bs-title="Wi-Fi available."></i>
           {% endif %}
         </p>
       </div>
@@ -104,6 +119,9 @@
 
 </section>
 
+
+
+
 <script>
 var condition = {{condition}};
 if (condition) {
@@ -124,6 +142,17 @@ function showModal() {
   }, 2000);
 }
 </script>
+
+<!--<script>-->
+<!--  const button = document.querySelector('#button');-->
+<!--  const tooltip = document.querySelector('#tooltip');-->
+
+<!--  // Pass the button, the tooltip, and some options, and Popper will do the-->
+<!--  // magic positioning for you:-->
+<!--  Popper.createPopper(button, tooltip, {-->
+<!--    placement: 'right',-->
+<!--  });-->
+<!--</script>-->
 
 {% endblock content %}
 

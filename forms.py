@@ -15,6 +15,13 @@ class MyFloatField(FloatField):
                 raise ValueError(self.gettext('Not a valid float value'))
 
 
+class MyEmailField(StringField):
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist[0].lower()
+            self.data = self.data.strip()
+
+
 # #WTForm
 
 class Cafe(FlaskForm):
@@ -33,7 +40,7 @@ class Cafe(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    email = StringField("Email",  validators=[DataRequired(), Email()])
+    email = MyEmailField("Email",  validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=16)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     name = StringField('Name', validators=[DataRequired(), Length(min=3, max=20)])
@@ -41,7 +48,7 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField("Email",  validators=[DataRequired(), Email()])
+    email = MyEmailField("Email",  validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Let Me In!')
 
