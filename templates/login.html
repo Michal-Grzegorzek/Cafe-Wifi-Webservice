@@ -18,11 +18,7 @@
         <div class="row">
 
           <div class="col-lg-8 col-md-10 mx-auto content mt-4">
-            {% with messages = get_flashed_messages() %}
 
-            <p style="text-align: center;">{{ messages[0] }}</p>
-
-            {% endwith %}
 
 
             <div class="container w-75">
@@ -55,6 +51,12 @@
                   </div>
 
                 </fieldset>
+
+                {% with messages = get_flashed_messages() %}
+
+                <p style="text-align: center; color: #DC0000;">{{ messages[0] }}</p>
+
+                {% endwith %}
                 <div class="field-group mt-4 text-center">
                   {{form.submit(class="btn btn-online-info btn-dark")}}
 

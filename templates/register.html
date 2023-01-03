@@ -3,27 +3,6 @@
 
 {% block content %}
 
-<!--<div class="log-reg-image align-items-center">-->
-
-<!--  <div class="card log-reg-text drr" style="width: 100%;">-->
-<!--    <div class="card-body mt-4">-->
-<!--      <div class="col-lg-8 col-md-10 mx-auto">-->
-<!--        <h1 class="card-title">Register</h1>-->
-<!--        <h2 class="card-subtitle mb-2">Join us and start adding your favorite cafes!</h2>-->
-<!--      </div>-->
-
-
-<!--      <div class="container ">-->
-<!--        <div class="row">-->
-<!--          <div class="col-lg-8 col-md-10 mx-auto content mt-4 mb-5">-->
-<!--            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark mt-2"}) }}-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
 
 <div class="log-reg-image align-items-center">
 
@@ -108,69 +87,5 @@
     </div>
   </div>
 </div>
-
-<!--  <div class="container w-50">-->
-<!--    <form method="POST" action="">-->
-<!--      {{form.hidden_tag()}}-->
-
-<!--      <fieldset>-->
-<!--        <legend class="border-bottom mb-4">Join us and start adding your favorite cafes!</legend>-->
-<!--        <div class="form-group">-->
-<!--          {{form.email.label(class="form-control-label")}}-->
-<!--          {% if form.email.errors %}-->
-<!--          {{form.email(class="form-control is-invalid")}}-->
-<!--          {% for error in form.email.errors %}-->
-<!--          <span>{{error}}</span>-->
-<!--          {% endfor %}-->
-<!--          {% else %}-->
-<!--          {{form.email(class="form-control ")}}-->
-<!--          {% endif %}-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--          {{form.password.label(class="form-control-label")}}-->
-<!--          {% if form.password.errors %}-->
-<!--          {{form.password(class="form-control is-invalid")}}-->
-<!--          {% for error in form.password.errors %}-->
-<!--          <span>{{error}}</span>-->
-<!--          {% endfor %}-->
-<!--          {% else %}-->
-<!--          {{form.password(class="form-control ")}}-->
-<!--          {% endif %}-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--          {{form.confirm_password.label(class="form-control-label")}}-->
-<!--          {% if form.confirm_password.errors %}-->
-<!--          {{form.confirm_password(class="form-control is-invalid")}}-->
-<!--          {% for error in form.confirm_password.errors %}-->
-<!--          <span>{{error}}</span>-->
-<!--          {% endfor %}-->
-<!--          {% else %}-->
-<!--          {{form.confirm_password(class="form-control ")}}-->
-<!--          {% endif %}-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--          {{form.name.label(class="form-control-label")}}-->
-<!--          {% if form.name.errors %}-->
-<!--          {{form.name(class="form-control is-invalid")}}-->
-<!--          {% for error in form.name.errors %}-->
-<!--          <span>{{error}}</span>-->
-<!--          {% endfor %}-->
-<!--          {% else %}-->
-<!--          {{form.name(class="form-control ")}}-->
-<!--          {% endif %}-->
-<!--        </div>-->
-
-<!--      </fieldset>-->
-<!--      <div class="field-group mt-4">-->
-<!--        {{form.submit(class="btn btn-online-info")}}-->
-
-<!--      </div>-->
-
-<!--    </form>-->
-<!--  </div>-->
-
 
 {% endblock %}

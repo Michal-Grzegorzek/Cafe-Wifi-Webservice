@@ -1,6 +1,6 @@
 
 body {
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-x: hidden !important; /* Hide horizontal scrollbar */
 }
 
 body, html {
@@ -166,12 +166,6 @@ h2 {
     background-size: cover;
     position: relative;
 }
-
-
-.dupa{
-text-align: center;
-}
-
 
 /* Style the modal */
 #myModal {
