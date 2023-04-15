@@ -14,8 +14,9 @@ from sqlalchemy.dialects.mysql import FLOAT
 import os
 
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['SECRET_KEY'] = 'secret'
+app.app_context().push()
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+# app.config['SECRET_KEY'] = 'secret'
 Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
