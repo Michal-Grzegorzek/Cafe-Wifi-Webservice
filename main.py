@@ -91,8 +91,8 @@ class Reviews(db.Model):
 @app.route('/')
 @app.route('/home')
 def home():
-    cafes = AllCafes.query.all()
-    reviews = Reviews.query.all()
+    cafes = ""
+    reviews = ""
     condition = request.args.get('condition')
 
     return render_template("index.html", condition=condition, all_cafes=cafes, all_reviews=reviews, title="Home Page")
