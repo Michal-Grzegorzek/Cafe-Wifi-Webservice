@@ -84,15 +84,14 @@ class Reviews(db.Model):
     rate = db.Column(db.Integer)
 
 
-
-# db.create_all()
+db.create_all()
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    cafes = ""
-    reviews = ""
+    cafes = AllCafes.query.all()
+    reviews = Reviews.query.all()
     condition = request.args.get('condition')
 
     return render_template("index.html", condition=condition, all_cafes=cafes, all_reviews=reviews, title="Home Page")
